@@ -8,6 +8,7 @@ import com.trendyol.post.payment.operation.infrastructure.port.ProviderAdapterDe
 import com.trendyol.post.payment.operation.infrastructure.port.adapter.ProviderAdapter;
 import org.springframework.stereotype.Service;
 
+// <<Infrastructure Service>>
 @Service
 public class PostPaymentOperationService {
 

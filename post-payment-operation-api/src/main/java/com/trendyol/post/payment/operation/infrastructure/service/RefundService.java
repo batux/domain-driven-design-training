@@ -4,6 +4,7 @@ import com.trendyol.post.payment.operation.domain.model.refund.Refund;
 import com.trendyol.post.payment.operation.infrastructure.repository.RefundRepository;
 import org.springframework.stereotype.Service;
 
+// <<Infrastructure Service>>
 @Service
 public class RefundService {
 

@@ -3,12 +3,12 @@ package com.trendyol.post.payment.operation.application;
 import com.trendyol.post.payment.operation.application.model.RefundContext;
 import com.trendyol.post.payment.operation.domain.model.RefundRequest;
 import com.trendyol.post.payment.operation.domain.model.payment.CompletedPayment;
-import com.trendyol.post.payment.operation.domain.model.refund.Refund;
 import com.trendyol.post.payment.operation.domain.service.RefundAssembler;
 import com.trendyol.post.payment.operation.domain.service.RefundableOperationChecker;
 import com.trendyol.post.payment.operation.infrastructure.port.PaymentApiClient;
 import org.springframework.stereotype.Service;
 
+// <<Application Service>>
 @Service
 public class RefundPreparationService {
 
