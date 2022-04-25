@@ -3,22 +3,22 @@ package com.trendyol.payment.application;
 import com.trendyol.payment.domain.model.charge.Charge;
 import com.trendyol.payment.domain.model.charge.Payment;
 import com.trendyol.payment.domain.service.ChargeAssembler;
+import com.trendyol.payment.infrastructure.port.PosApiClient;
 import com.trendyol.payment.infrastructure.service.ChargeService;
 import com.trendyol.payment.infrastructure.service.PaymentService;
-import com.trendyol.pos.management.application.PosSelectionHandler;
 
 public abstract class ChargeHandler <T> {
 
     protected final ChargeAssembler chargeAssembler;
     protected final ChargeService chargeService;
     protected final PaymentService paymentService;
-    protected final PosSelectionHandler posSelectionHandler;
+    protected final PosApiClient posApiClient;
 
-    protected ChargeHandler(ChargeAssembler chargeAssembler, ChargeService chargeService, PaymentService paymentService, PosSelectionHandler posSelectionHandler) {
+    protected ChargeHandler(ChargeAssembler chargeAssembler, ChargeService chargeService, PaymentService paymentService, PosApiClient posApiClient) {
         this.chargeAssembler = chargeAssembler;
         this.chargeService = chargeService;
         this.paymentService = paymentService;
-        this.posSelectionHandler = posSelectionHandler;
+        this.posApiClient = posApiClient;
     }
 
     public T runChargeFlow(Charge chargeRequest) {

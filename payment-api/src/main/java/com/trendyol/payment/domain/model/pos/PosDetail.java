@@ -1,4 +1,4 @@
-package com.trendyol.pos.management.domain.model;
+package com.trendyol.payment.domain.model.pos;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -17,4 +17,8 @@ public class PosDetail {
     private Type type;
     @Getter
     private ProviderType providerType;
+    @Getter
+    private Secret secrets;
+    @Getter
+    private Url urls;
 }

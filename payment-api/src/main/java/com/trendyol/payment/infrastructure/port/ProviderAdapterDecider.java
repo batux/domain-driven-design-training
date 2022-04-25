@@ -1,8 +1,8 @@
 package com.trendyol.payment.infrastructure.port;
 
 import com.trendyol.payment.domain.model.charge.transaction.ProviderTransactionDetail;
+import com.trendyol.payment.domain.model.pos.PosDetail;
 import com.trendyol.payment.infrastructure.port.adapter.ProviderAdapter;
-import com.trendyol.pos.management.domain.model.Pos;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class ProviderAdapterDecider {
         this.adapters = adapters;
     }
 
-    public ProviderAdapter<? extends ProviderTransactionDetail> decide(Pos pos) {
+    public ProviderAdapter<? extends ProviderTransactionDetail> decide(PosDetail pos) {
         Optional<ProviderAdapter<? extends ProviderTransactionDetail>> adapterOption = this.adapters.stream().filter(adapter -> adapter.canExecute(pos)).findFirst();
         if(adapterOption.isEmpty()) {
             throw new RuntimeException("Not found any defined virtual pos!");

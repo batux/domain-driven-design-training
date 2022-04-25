@@ -1,4 +1,4 @@
-package com.trendyol.pos.management.domain.model;
+package com.trendyol.payment.domain.model.pos;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -10,17 +10,18 @@ import org.springframework.util.StringUtils;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Url {
+public class Secret {
+
     @Getter
-    private String chargeUrl;
+    private String authCode;
     @Getter
-    private String refundUrl;
+    private String username;
     @Getter
-    private String queryUrl;
+    private String password;
 
     public boolean isValid() {
-        return StringUtils.isEmpty(this.chargeUrl) &&
-                StringUtils.isEmpty(this.refundUrl) &&
-                StringUtils.isEmpty(this.queryUrl);
+        return !StringUtils.isEmpty(this.authCode) &&
+                !StringUtils.isEmpty(this.username) &&
+                !StringUtils.isEmpty(this.password);
     }
 }

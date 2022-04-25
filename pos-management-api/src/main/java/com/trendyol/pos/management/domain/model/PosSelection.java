@@ -1,6 +1,5 @@
-package com.trendyol.payment.domain.model;
+package com.trendyol.pos.management.domain.model;
 
-import com.trendyol.pos.management.domain.model.Type;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

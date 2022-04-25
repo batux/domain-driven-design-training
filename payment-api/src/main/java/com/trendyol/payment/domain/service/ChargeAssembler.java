@@ -1,6 +1,6 @@
 package com.trendyol.payment.domain.service;
 
-import com.trendyol.payment.domain.model.PosSelection;
+import com.trendyol.payment.domain.model.pos.PosSelection;
 import com.trendyol.payment.domain.model.charge.Charge;
 import com.trendyol.payment.domain.model.charge.CreditCard;
 import com.trendyol.payment.domain.model.charge.Payment;
@@ -19,12 +19,12 @@ public class ChargeAssembler {
         return new PosSelection(charge.getInstallmentCount(), determinePosType(charge.getType()));
     }
 
-    private com.trendyol.pos.management.domain.model.Type determinePosType(Type type) {
+    private com.trendyol.payment.domain.model.pos.Type determinePosType(Type type) {
         if(Type.PAY_WITH_CARD.equals(type)) {
-            return com.trendyol.pos.management.domain.model.Type.SYNC;
+            return com.trendyol.payment.domain.model.pos.Type.SYNC;
         }
         else if(Type.PAY_ASYNC.equals(type)) {
-            return com.trendyol.pos.management.domain.model.Type.ASYNC;
+            return com.trendyol.payment.domain.model.pos.Type.ASYNC;
         }
         throw new RuntimeException("Not suitable payment type!");
     }

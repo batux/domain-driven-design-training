@@ -5,12 +5,12 @@ import com.trendyol.payment.domain.model.charge.Payment;
 import com.trendyol.payment.domain.model.charge.Type;
 import com.trendyol.payment.domain.model.charge.event.Authorised;
 import com.trendyol.payment.domain.model.charge.transaction.Transaction;
+import com.trendyol.payment.domain.model.pos.PosDetail;
 import com.trendyol.payment.domain.service.AuthorisedProducer;
 import com.trendyol.payment.domain.service.ChargeAssembler;
+import com.trendyol.payment.infrastructure.port.PosApiClient;
 import com.trendyol.payment.infrastructure.service.ChargeService;
 import com.trendyol.payment.infrastructure.service.PaymentService;
-import com.trendyol.pos.management.application.PosSelectionHandler;
-import com.trendyol.pos.management.domain.model.Pos;
 import org.springframework.stereotype.Service;
 
 import java.util.Iterator;
@@ -20,17 +20,17 @@ import java.util.List;
 @Service
 public class CreditCardChargeHandler extends ChargeHandler<Authorised> {
 
-    public CreditCardChargeHandler(ChargeAssembler assembler, ChargeService chargeService, PaymentService paymentService, PosSelectionHandler posHandler) {
-        super(assembler, chargeService, paymentService, posHandler);
+    public CreditCardChargeHandler(ChargeAssembler assembler, ChargeService chargeService, PaymentService paymentService, PosApiClient posApiClient) {
+        super(assembler, chargeService, paymentService, posApiClient);
     }
 
     @Override
     public Payment charge(Charge charge, Payment payment) {
         // INFO: pos retry logic is special for credit card charge flow
-        List<Pos> posList = this.posSelectionHandler.fetchValidList(this.chargeAssembler.preparePosSelection(charge));
-        Iterator<Pos> posIterator = posList.iterator();
+        List<PosDetail> posList = this.posApiClient.fetchValidList(this.chargeAssembler.preparePosSelection(charge));
+        Iterator<PosDetail> posIterator = posList.iterator();
         do {
-            Pos selectedPos = posIterator.next();
+            PosDetail selectedPos = posIterator.next();
             Transaction transaction = chargeService.charge(payment, selectedPos);
             payment.addTransaction(transaction);
         } while(!payment.isSuccessful() && posIterator.hasNext());

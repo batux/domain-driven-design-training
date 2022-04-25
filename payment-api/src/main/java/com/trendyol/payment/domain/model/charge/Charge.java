@@ -2,7 +2,7 @@ package com.trendyol.payment.domain.model.charge;
 
 import com.trendyol.payment.domain.model.Customer;
 import com.trendyol.payment.domain.model.Money;
-import com.trendyol.pos.management.domain.model.ProviderType;
+import com.trendyol.payment.domain.model.pos.ProviderType;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

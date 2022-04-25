@@ -1,10 +1,9 @@
 package com.trendyol.payment.infrastructure.port.adapter;
 
+import com.trendyol.payment.domain.model.pos.PosDetail;
+import com.trendyol.payment.domain.model.pos.ProviderType;
 import com.trendyol.payment.domain.model.charge.Payment;
 import com.trendyol.payment.domain.model.charge.transaction.ProviderTransactionDetail;
-import com.trendyol.pos.management.domain.model.Pos;
-import com.trendyol.pos.management.domain.model.ProviderType;
-
 public abstract class ProviderAdapter <T extends ProviderTransactionDetail> {
 
     private final ProviderType providerType;
@@ -13,7 +12,7 @@ public abstract class ProviderAdapter <T extends ProviderTransactionDetail> {
         this.providerType = providerType;
     }
 
-    public boolean canExecute(Pos pos) {
+    public boolean canExecute(PosDetail pos) {
         return this.isSame(pos.getProviderType());
     }
 
@@ -21,5 +20,5 @@ public abstract class ProviderAdapter <T extends ProviderTransactionDetail> {
         return this.providerType.equals(providerType);
     }
 
-    public abstract T charge(Payment payment, Pos selectedPos);
+    public abstract T charge(Payment payment, PosDetail selectedPos);
 }

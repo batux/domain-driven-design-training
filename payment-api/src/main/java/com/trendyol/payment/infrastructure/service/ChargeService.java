@@ -3,9 +3,9 @@ package com.trendyol.payment.infrastructure.service;
 import com.trendyol.payment.domain.model.charge.Payment;
 import com.trendyol.payment.domain.model.charge.transaction.ProviderTransactionDetail;
 import com.trendyol.payment.domain.model.charge.transaction.Transaction;
+import com.trendyol.payment.domain.model.pos.PosDetail;
 import com.trendyol.payment.infrastructure.port.adapter.ProviderAdapter;
 import com.trendyol.payment.infrastructure.port.ProviderAdapterDecider;
-import com.trendyol.pos.management.domain.model.Pos;
 import org.springframework.stereotype.Service;
 
 // <<Infrastructure Service>>
@@ -18,11 +18,11 @@ public class ChargeService {
         this.providerAdapterDecider = providerAdapterDecider;
     }
 
-    public Transaction charge(Payment payment, Pos selectedPos) {
+    public Transaction charge(Payment payment, PosDetail selectedPos) {
 
         ProviderAdapter<? extends ProviderTransactionDetail> providerAdapter = providerAdapterDecider.decide(selectedPos);
         ProviderTransactionDetail providerTransaction = providerAdapter.charge(payment, selectedPos);
-        Transaction transaction = new Transaction(selectedPos.buildDetails());
+        Transaction transaction = new Transaction(selectedPos);
         transaction.setTransactionDetail(providerTransaction);
         return transaction;
     }

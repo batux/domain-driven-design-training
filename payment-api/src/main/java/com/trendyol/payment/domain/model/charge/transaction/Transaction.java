@@ -1,8 +1,8 @@
 package com.trendyol.payment.domain.model.charge.transaction;
 
-import com.trendyol.pos.management.domain.model.PosDetail;
-import com.trendyol.pos.management.domain.model.ProviderType;
-import com.trendyol.pos.management.domain.model.Type;
+import com.trendyol.payment.domain.model.pos.PosDetail;
+import com.trendyol.payment.domain.model.pos.ProviderType;
+import com.trendyol.payment.domain.model.pos.Type;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;

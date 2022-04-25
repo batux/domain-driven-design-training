@@ -1,4 +1,4 @@
-package com.trendyol.pos.management.domain.model;
+package com.trendyol.payment.domain.model.pos;
 
 // <<Value Object>>
 public enum ProviderType {
