@@ -29,8 +29,17 @@ public class RefundHandler {
     }
 
     public Refunded runRefundFlow(RefundRequest refundRequest) {
+
+        Refund refund = null;
+        if(refundRequest.hasRefundReferenceNumber()) {
+            refund = this.refundService.findById(refundRequest.getRefundReferenceNumber());
+        }
+        if(refund != null && refund.canRefund()) {
+            return RefundedProducer.assemble(refund);
+        }
+
         RefundContext refundContext = this.refundPreparationService.prepare(refundRequest);
-        Refund refund = refundContext.getRefund();
+        refund = refundContext.getRefund();
         CompletedPayment payment = refundContext.getPayment();
 
         // insert refund to db (infrastructure service)

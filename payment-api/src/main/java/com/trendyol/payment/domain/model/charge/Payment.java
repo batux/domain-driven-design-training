@@ -27,6 +27,7 @@ public class Payment {
 
     public Payment(Type type, int installmentCount, Customer user, Money amount, CreditCard card) {
         this.initialize(type, installmentCount, user, amount);
+        // TODO: How can we refactor below code block?
         if(this.card != null && !this.card.isValid()) {
             throw new RuntimeException("Credit Card is not valid!");
         }

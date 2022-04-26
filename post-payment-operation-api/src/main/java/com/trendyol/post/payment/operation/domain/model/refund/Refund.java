@@ -52,6 +52,10 @@ public class Refund {
         return this.isSuccessful() && transaction != null && transaction.isForwarded();
     }
 
+    public boolean canRefund() {
+        return !(this.isForwarded() || this.isRefunded());
+    }
+
     public void addTransaction(Transaction transaction) {
         this.transactions.add(transaction);
         if(transaction.getSuccess()) {

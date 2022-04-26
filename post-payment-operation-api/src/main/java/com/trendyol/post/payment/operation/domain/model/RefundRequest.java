@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
 
 // <<Value Object>>
 @NoArgsConstructor
@@ -15,4 +16,10 @@ public class RefundRequest {
     private String paymentId;
     @Getter
     private Money refundAmount;
+    @Getter
+    private String refundReferenceNumber;
+
+    public boolean hasRefundReferenceNumber() {
+        return !StringUtils.isEmpty(this.refundReferenceNumber);
+    }
 }
