@@ -6,7 +6,6 @@ import com.trendyol.payment.domain.model.charge.Type;
 import com.trendyol.payment.domain.model.charge.event.Accepted;
 import com.trendyol.payment.domain.model.charge.transaction.Transaction;
 import com.trendyol.payment.domain.model.pos.PosDetail;
-import com.trendyol.payment.domain.service.AcceptedProducer;
 import com.trendyol.payment.domain.service.ChargeAssembler;
 import com.trendyol.payment.infrastructure.port.PosApiClient;
 import com.trendyol.payment.infrastructure.service.ChargeService;
@@ -31,7 +30,7 @@ public class AsyncChargeHandler extends ChargeHandler<Accepted> {
 
     @Override
     public Accepted prepareChargeResult(Payment payment) {
-        return AcceptedProducer.assemble(payment);
+        return payment.accepted();
     }
 
     @Override

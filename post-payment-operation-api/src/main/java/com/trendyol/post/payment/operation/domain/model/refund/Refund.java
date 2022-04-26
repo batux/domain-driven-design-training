@@ -1,5 +1,6 @@
 package com.trendyol.post.payment.operation.domain.model.refund;
 
+import com.trendyol.post.payment.operation.domain.model.event.Refunded;
 import com.trendyol.post.payment.operation.domain.model.transaction.Transaction;
 import lombok.Getter;
 import org.springframework.util.StringUtils;
@@ -21,12 +22,14 @@ public class Refund {
     private Money amount;
     private Status status;
     private List<Transaction> transactions;
+    private List<Object> events;
 
     public Refund(String paymentId, Money amount) {
         this.id = UUID.randomUUID().toString();
         this.status = Status.INITIALIZED;
         this.createdDate = new Date();
         this.transactions = new LinkedList<>();
+        this.events = new LinkedList<>();
         if(!amount.isValid()) {
             throw new RuntimeException("Refund amount is not valid!");
         }
@@ -77,6 +80,12 @@ public class Refund {
                 .filter(it -> !it.getSuccess())
                 .reduce((first, second) -> second)
                 .orElse(null);
+    }
+
+    public Refunded refunded() {
+        Refunded refunded = new Refunded(this.getId(), this.getPaymentId(), this.getAmount(), this.isForwarded());
+        this.events.add(refunded);
+        return refunded;
     }
 
     @Override

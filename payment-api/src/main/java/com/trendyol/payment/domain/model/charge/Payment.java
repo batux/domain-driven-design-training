@@ -2,6 +2,8 @@ package com.trendyol.payment.domain.model.charge;
 
 import com.trendyol.payment.domain.model.Customer;
 import com.trendyol.payment.domain.model.Money;
+import com.trendyol.payment.domain.model.charge.event.Accepted;
+import com.trendyol.payment.domain.model.charge.event.Authorised;
 import com.trendyol.payment.domain.model.charge.transaction.Transaction;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,13 +26,10 @@ public class Payment {
     private Status status;
     private CreditCard card;
     private List<Transaction> transactions;
+    private List<Object> events;
 
     public Payment(Type type, int installmentCount, Customer user, Money amount, CreditCard card) {
         this.initialize(type, installmentCount, user, amount);
-        // TODO: How can we refactor below code block?
-        if(this.card != null && !this.card.isValid()) {
-            throw new RuntimeException("Credit Card is not valid!");
-        }
         this.card = card;
     }
 
@@ -42,6 +41,7 @@ public class Payment {
         this.createdDate = new Date();
         this.status = Status.INITIALIZED;
         this.transactions = new LinkedList<>();
+        this.events = new LinkedList<>();
         this.id = UUID.randomUUID().toString();
         this.type = type;
         if(installmentCount < 1) {
@@ -116,6 +116,18 @@ public class Payment {
                 .filter(tr -> !tr.isSuccess())
                 .reduce((first, second) -> second)
                 .orElse(null);
+    }
+
+    public Accepted accepted() {
+        Accepted accepted = new Accepted(this.getId(), this.getStatus(), this.isSuccessful(), this.accessProviderAction());
+        this.events.add(accepted);
+        return accepted;
+    }
+
+    public Authorised authorised() {
+        Authorised authorised = new Authorised(this.getId(), this.getStatus(), this.isSuccessful());
+        this.events.add(authorised);
+        return authorised;
     }
 
     @Override

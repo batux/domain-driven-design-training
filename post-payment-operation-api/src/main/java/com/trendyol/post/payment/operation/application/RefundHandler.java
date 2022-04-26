@@ -6,7 +6,6 @@ import com.trendyol.post.payment.operation.domain.model.event.Refunded;
 import com.trendyol.post.payment.operation.domain.model.payment.CompletedPayment;
 import com.trendyol.post.payment.operation.domain.model.pos.Pos;
 import com.trendyol.post.payment.operation.domain.model.refund.Refund;
-import com.trendyol.post.payment.operation.domain.service.RefundedProducer;
 import com.trendyol.post.payment.operation.infrastructure.port.PosApiClient;
 import com.trendyol.post.payment.operation.infrastructure.service.PostPaymentOperationService;
 import com.trendyol.post.payment.operation.infrastructure.service.RefundService;
@@ -35,7 +34,7 @@ public class RefundHandler {
             refund = this.refundService.findById(refundRequest.getRefundReferenceNumber());
         }
         if(refund != null && refund.canRefund()) {
-            return RefundedProducer.assemble(refund);
+            return refund.refunded();
         }
 
         RefundContext refundContext = this.refundPreparationService.prepare(refundRequest);
@@ -58,6 +57,6 @@ public class RefundHandler {
         this.refundService.update(refund);
 
         // prepare refunded response (domain service)
-        return RefundedProducer.assemble(refund);
+        return refund.refunded();
     }
 }

@@ -6,7 +6,6 @@ import com.trendyol.payment.domain.model.charge.Type;
 import com.trendyol.payment.domain.model.charge.event.Authorised;
 import com.trendyol.payment.domain.model.charge.transaction.Transaction;
 import com.trendyol.payment.domain.model.pos.PosDetail;
-import com.trendyol.payment.domain.service.AuthorisedProducer;
 import com.trendyol.payment.domain.service.ChargeAssembler;
 import com.trendyol.payment.infrastructure.port.PosApiClient;
 import com.trendyol.payment.infrastructure.service.ChargeService;
@@ -39,7 +38,7 @@ public class CreditCardChargeHandler extends ChargeHandler<Authorised> {
 
     @Override
     public Authorised prepareChargeResult(Payment payment) {
-        return AuthorisedProducer.assemble(payment);
+        return payment.authorised();
     }
 
     @Override

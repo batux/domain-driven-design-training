@@ -9,8 +9,6 @@ import org.springframework.util.StringUtils;
 import java.util.Date;
 
 // <<Value Object>>
-@NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode
 public class CreditCard {
 
@@ -26,6 +24,12 @@ public class CreditCard {
     private String cvv;
     @Getter
     private Family family;
+
+    public CreditCard(String referenceNumber, String holderFullName, int month, int year, String cvv, Family family) {
+        if(!this.isValid()) {
+            throw new RuntimeException("Credit Card is not valid!");
+        }
+    }
 
     public boolean isValid() {
         return !StringUtils.isEmpty(this.referenceNumber) &&
